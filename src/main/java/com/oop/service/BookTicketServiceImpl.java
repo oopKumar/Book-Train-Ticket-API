@@ -45,7 +45,7 @@ public class BookTicketServiceImpl implements BookTicketService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getTicketById(Integer ticketId) {
+	public <T> T checkTicketStatusById(Integer ticketId) {
 		Optional<Ticket> ticket = ticketRepository.findById(ticketId);
 		if (ticket.isPresent()) {
 			return (T) ticket.get();
@@ -53,11 +53,19 @@ public class BookTicketServiceImpl implements BookTicketService {
 			return (T) "Not Found";
 		}
 	}
-	
-	  public String cancelTicket(Integer ticketId) {
-		  ticketRepository.deleteById(ticketId);
-		  return "Ticket Canceled Successfully";
-	  }
+
+	public String cancelTicket(Integer ticketId) {
+
+		Optional<Ticket> findById = ticketRepository.findById(ticketId);
+		if (findById.isPresent()) {
+			ticketRepository.deleteById(ticketId);
+			return "Ticket Canceled Successfully";
+
+		} else {
+			return "Ticket Id Not Found";
+
+		}
+	}
 
 	public String downloadTicketById(HttpServletResponse response, Integer ticketId) throws Exception {
 		Document document = new Document(PageSize.A4);
@@ -128,11 +136,10 @@ public class BookTicketServiceImpl implements BookTicketService {
 			document.close();
 			return "Ticket Downloaded SuccessFully";
 
+		} else {
+			return "PNR Not Available";
 		}
-		else {
-			return "PNR Not Available";	
-		}
-		
+
 	}
 
 }

@@ -8,7 +8,7 @@ import com.oop.response.Ticket;
   
   public interface BookTicketService { 
 	  public Ticket bookTicket(Passenger passenger);
-	  public <T> T getTicketById(Integer ticketId);
+	  public <T> T checkTicketStatusById(Integer ticketId);
 	  public String downloadTicketById(HttpServletResponse response,Integer ticketId)throws Exception;
 	  public String cancelTicket(Integer ticketId);
   }

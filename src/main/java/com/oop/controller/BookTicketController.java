@@ -1,8 +1,5 @@
-
 package com.oop.controller;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.oop.request.Passenger;
 import com.oop.response.Ticket;
 import com.oop.service.BookTicketService;
@@ -37,10 +33,11 @@ public class BookTicketController {
 		return new ResponseEntity<>(bookTicket, HttpStatus.CREATED);
 	}
 
-	@GetMapping(value = "/getTicket/{ticketId}", produces = { "application/xml", "application/json" })
-	public ResponseEntity<?> getTicketById(@PathVariable Integer ticketId) {
+	@GetMapping(value = "/checkStatus/{ticketId}", 
+			produces = { "application/xml", "application/json" })
+	public ResponseEntity<?> checkTicketStatusById(@PathVariable Integer ticketId) {
 
-		Object getTicket = bookTicketService.getTicketById(ticketId);
+		Object getTicket = bookTicketService.checkTicketStatusById(ticketId);
 		if (getTicket.equals("Not Found")) {
 			return new ResponseEntity<>("Not Ticket Found With this Id   " + ticketId, HttpStatus.BAD_REQUEST);
 		} else {
